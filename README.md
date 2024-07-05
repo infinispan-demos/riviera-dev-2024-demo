@@ -1,4 +1,18 @@
+
 # Riviera Dev 2024 - Demo
+
+## Paris Weather
+
+```bash
+http http://localhost:8080/weather/paris
+http http://localhost:8080/weather/paris?daysInFuture=100
+```
+
+Configure Expiration on the client
+
+```properties
+quarkus.cache.infinispan.paris.lifespan=10s
+```
 
 ## Caching Use Case
 
@@ -20,3 +34,11 @@ podman compose up
 Console Jaeger
 
 http://localhost:16686/
+
+## Composite Key
+All cities
+
+
+## Schema for weather
+
+

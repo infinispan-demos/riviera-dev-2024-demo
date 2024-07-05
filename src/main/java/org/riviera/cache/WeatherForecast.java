@@ -4,16 +4,16 @@ import java.util.List;
 
 public class WeatherForecast {
 
-    private List<String> dailyForecasts;
+    private List dailyForecasts;
 
     private long executionTimeInMs;
 
-    public WeatherForecast(List<String> dailyForecasts, long executionTimeInMs) {
+    public WeatherForecast(List dailyForecasts, long executionTimeInMs) {
         this.dailyForecasts = dailyForecasts;
         this.executionTimeInMs = executionTimeInMs;
     }
 
-    public List<String> getDailyForecasts() {
+    public List getDailyForecasts() {
         return dailyForecasts;
     }
 
