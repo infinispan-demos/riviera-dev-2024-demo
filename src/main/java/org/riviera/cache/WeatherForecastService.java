@@ -9,13 +9,13 @@ import io.quarkus.cache.CacheResult;
 @ApplicationScoped
 public class WeatherForecastService {
 
-    @CacheResult(cacheName = "expiration-cache")
+    @CacheResult(cacheName = "mycache")
     public String getDailyForecastDayMonth(long epoch, String city) {
-        try {
-            Thread.sleep(1000L);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+//        try {
+//            //Thread.sleep(1000L);
+//        } catch (InterruptedException e) {
+//            Thread.currentThread().interrupt();
+//        }
         LocalDate localDate = LocalDate.ofEpochDay(epoch);
         return localDate.getDayOfWeek() + " will be " + getDailyResult(localDate.getDayOfMonth() % 4) + " in " + city;
     }
