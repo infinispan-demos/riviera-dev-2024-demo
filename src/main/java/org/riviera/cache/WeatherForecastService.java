@@ -45,7 +45,8 @@ public class WeatherForecastService {
     private RemoteCache<String, Weather> weatherRemoteCache;
 
     public List<String> searchCityByWeather(String weather) {
-        Query<Object[]> query = weatherRemoteCache.query("select w.city from riviera.Weather w where w.weather=':p1'");
+        Query<Object[]> query = weatherRemoteCache.query("select w.city from riviera.Weather w where w.weather:':p1'~2");
+//        Query<Object[]> query = weatherRemoteCache.query("select w.city from riviera.Weather w where w.weather=':p1'");
         query.setParameter("p1", weather);
         Log.info(query.getQueryString());
         query.execute().list().stream().forEach(s -> System.out.println(s));

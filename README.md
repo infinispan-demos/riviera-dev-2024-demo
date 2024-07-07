@@ -1,4 +1,3 @@
-
 # Riviera Dev 2024 - Demo
 
 ## Paris Weather

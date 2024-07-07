@@ -5,11 +5,18 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.quarkus.logging.Log;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
+import jakarta.json.Json;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 
+import jakarta.ws.rs.core.Response;
+import org.infinispan.client.hotrod.exceptions.HotRodClientException;
 import org.jboss.resteasy.reactive.RestQuery;
+import org.jboss.resteasy.reactive.RestResponse;
+import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
 
 @Path("/weather")
 public class WeatherForecastResource {
@@ -67,4 +74,11 @@ public class WeatherForecastResource {
         return service.searchCityByWeather(type);
     }
 
+    public static class ExceptionMappers {
+        @ServerExceptionMapper
+        public RestResponse<String> mapException(HotRodClientException ex) {
+            return RestResponse.status(Response.Status.BAD_REQUEST,
+                    Json.createObjectBuilder().add("infinispan-error", ex.getMessage()).build().toString());
+        }
+    }
 }
