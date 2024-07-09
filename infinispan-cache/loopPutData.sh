@@ -15,5 +15,5 @@ done
 
 for i in {0..3}
 do
-  http "localhost:8080/weather?city=Madrid&days=$i"
+  http "localhost:8080/weather/Madrid?days=$i"
 done
