@@ -9,7 +9,6 @@ http http://localhost:8080/weather/paris?daysInFuture=100
 
 ## Paris Infinispan Cache
 
-Rajouter la dependence
 ```xml
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -28,8 +27,6 @@ public WeatherForecast getForecast(@RestPath String city, @RestQuery long daysIn
 }
         
 ```
-
-Rajouter city
 
 ```java
     @CacheResult(cacheName = "mycache")
@@ -67,10 +64,6 @@ public Weather getDaily(long epoch, String city) {
 ```java
     @GET
     public WeatherForecast getForecast(@RestQuery String city, @RestQuery long daysInFuture) {
-        long executionStart = System.currentTimeMillis();
-        LocalDate nowPlusDays = LocalDate.now().plusDays(daysInFuture);
-        LocalDate nowPlusDaysPlus1 = LocalDate.now().plusDays(daysInFuture + 1L);
-        LocalDate nowPlusDaysPlus2 = LocalDate.now().plusDays(daysInFuture + 2L);
         List<Weather> dailyForecasts = Arrays.asList(
                 service.getDaily(nowPlusDays.toEpochDay(), city),
                 service.getDaily(nowPlusDaysPlus1.toEpochDay(), city),
@@ -83,7 +76,7 @@ public Weather getDaily(long epoch, String city) {
 ## Faire une recherche non indexé
 
 ```java
-@GET
+    @GET
     @Path("travel")
     public List<String> getTravelCity(@RestQuery String type) {
         Log.info(type);
@@ -94,7 +87,7 @@ public Weather getDaily(long epoch, String city) {
 ```java
 @Inject
 @Remote("mycache")
-private RemoteCache<String, Weather> weatherRemoteCache;
+private RemoteCache<WeatherKey, Weather> weatherRemoteCache;
 
 public List<String> searchCityByWeather(String weather) {
         Query<Object[]> query = weatherRemoteCache.query("select w.city from riviera.Weather w where w.weather=':p1'");
@@ -114,26 +107,3 @@ public static class ExceptionMappers {
         }
     }
 ```
-
-# Montrer Cluster
-
-```properties
-quarkus.infinispan-client.dev-services.enabled=false
-quarkus.infinispan-client.hosts=localhost:11222
-quarkus.infinispan-client.username=admin
-quarkus.infinispan-client.password=password
-quarkus.infinispan-client.client-intelligence=BASIC
-quarkus.cache.infinispan.expiration-cache.lifespan=15s
-```
-
-```bash
-podman compose up 
-```
-
-## Surveillance
-
-Console Jaeger
-
-http://localhost:16686/
-
-
