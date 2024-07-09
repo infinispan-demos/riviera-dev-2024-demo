@@ -83,7 +83,7 @@ public Weather getDaily(long epoch, String city) {
 ## Faire une recherche non indexé
 
 ```java
-@GET
+    @GET
     @Path("travel")
     public List<String> getTravelCity(@RestQuery String type) {
         Log.info(type);
@@ -123,7 +123,6 @@ quarkus.infinispan-client.hosts=localhost:11222
 quarkus.infinispan-client.username=admin
 quarkus.infinispan-client.password=password
 quarkus.infinispan-client.client-intelligence=BASIC
-quarkus.cache.infinispan.expiration-cache.lifespan=15s
 ```
 
 ```bash

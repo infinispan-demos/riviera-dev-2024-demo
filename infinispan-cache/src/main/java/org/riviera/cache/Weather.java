@@ -1,2 +1,7 @@
-package org.riviera.cache;public class Weather {
+package org.riviera.cache;
+
+import org.infinispan.protostream.annotations.Proto;
+
+@Proto
+public record Weather(String weather, String day, String city) {
 }

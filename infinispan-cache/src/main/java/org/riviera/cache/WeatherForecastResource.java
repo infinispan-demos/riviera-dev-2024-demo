@@ -3,6 +3,7 @@ package org.riviera.cache;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestQuery;
 
 import java.time.LocalDate;
@@ -16,16 +17,16 @@ public class WeatherForecastResource {
     WeatherForecastService service;
 
     @GET
-    @Path("paris")
-    public WeatherForecast getForecastParis(@RestQuery long daysInFuture) {
+    @Path("{city}")
+    public WeatherForecast getForecastParis(@RestQuery long daysInFuture, @RestPath("city") String city) {
         long executionStart = System.currentTimeMillis();
         LocalDate nowPlusDays = LocalDate.now().plusDays(daysInFuture);
         LocalDate nowPlusDaysPlus1 = LocalDate.now().plusDays(daysInFuture + 1L);
         LocalDate nowPlusDaysPlus2 = LocalDate.now().plusDays(daysInFuture + 2L);
-        List<String> dailyForecasts = Arrays.asList(
-                service.getDailyForecastParis(nowPlusDays.toEpochDay()),
-                service.getDailyForecastParis(nowPlusDaysPlus1.toEpochDay()),
-                service.getDailyForecastParis(nowPlusDaysPlus2.toEpochDay()));
+        List<Weather> dailyForecasts = Arrays.asList(
+                service.getDailyForecastParis(nowPlusDays.toEpochDay(), city),
+                service.getDailyForecastParis(nowPlusDaysPlus1.toEpochDay(), city),
+                service.getDailyForecastParis(nowPlusDaysPlus2.toEpochDay(), city));
         long executionEnd = System.currentTimeMillis();
         return new WeatherForecast(dailyForecasts, executionEnd - executionStart);
     }

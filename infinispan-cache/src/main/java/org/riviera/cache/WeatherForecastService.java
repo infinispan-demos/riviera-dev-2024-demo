@@ -9,14 +9,10 @@ import java.time.LocalDate;
 public class WeatherForecastService {
 
     @CacheResult(cacheName = "mycache")
-    public String getDailyForecastParis(long epoch) {
-        try {
-            Thread.sleep(1000L);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+    public Weather getDailyForecastParis(long epoch, String city) {
         LocalDate localDate = LocalDate.ofEpochDay(epoch);
-        return localDate.getDayOfWeek() + " will be " + getDailyResult(localDate.getDayOfMonth() % 4);
+        return new Weather(getDailyResult(localDate.getDayOfMonth() % 4),
+                localDate.getDayOfWeek().name(), city);
     }
 
     private String getDailyResult(int dayOfMonthModuloFour) {
