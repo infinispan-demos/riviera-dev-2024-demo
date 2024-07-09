@@ -7,6 +7,15 @@ http http://localhost:8080/weather/paris
 http http://localhost:8080/weather/paris?daysInFuture=100
 ```
 
+## Paris Infinispan Cache
+
+```xml
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-infinispan-cache</artifactId>
+    </dependency>
+```
+
 Configure Expiration on the client
 
 ```properties
