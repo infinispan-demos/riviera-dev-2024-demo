@@ -15,11 +15,12 @@ To use Infinispan:
 
 * Run the server locally
 
+```bash
+podman run -it -p 11222:11222 -e USER="admin" -e PASS="password" quay.io/infinispan-test/server:main  
+```
 * Change the config
 
 ```properties
 quarkus.redis.devservices.enabled=false
 quarkus.redis.hosts=redis://admin:password@localhost:11222
 ```
-
-Restart
