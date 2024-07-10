@@ -76,25 +76,23 @@ public Weather getDaily(long epoch, String city) {
 ## Faire une recherche non indexé
 
 ```java
-    @GET
-    @Path("travel")
-    public List<String> getTravelCity(@RestQuery String type) {
-        Log.info(type);
-        return service.searchCityByWeather(type);
-    }
+// http localhost:8080/weather/travel
+@GET
+@Path("travel")
+public List<Weather> getTravelCity() {
+    return service.searchCityByWeather();
+}
 ```
 
 ```java
 @Inject
 @Remote("mycache")
-private RemoteCache<WeatherKey, Weather> weatherRemoteCache;
+private RemoteCache<CompositeKey, Weather> weatherRemoteCache;
 
-public List<String> searchCityByWeather(String weather) {
-        Query<Object[]> query = weatherRemoteCache.query("select w.city from riviera.Weather w where w.weather=':p1'");
-        query.setParameter("p1", weather);
-        Log.info(query.getQueryString());
-        query.execute().list().stream().forEach(s -> System.out.println(s));
-        return query.execute().list().stream().map(r -> r[0].toString()).collect(Collectors.toList());
+public List<Weather> searchCityByWeather() {
+        return weatherRemoteCache
+        .<Weather>query("from riviera.Weather w where w.weather='sunny'")
+        .execute().list();
 }
 ```
 

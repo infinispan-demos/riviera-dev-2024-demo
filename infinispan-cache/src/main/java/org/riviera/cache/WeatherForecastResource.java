@@ -15,6 +15,7 @@ public class WeatherForecastResource {
     @Inject
     WeatherForecastService service;
 
+    // http localhost:8080/weather/paris
     @GET
     @Path("paris")
     public WeatherForecast getForecastParis(@RestQuery long daysInFuture) {
@@ -29,4 +30,5 @@ public class WeatherForecastResource {
         long executionEnd = System.currentTimeMillis();
         return new WeatherForecast(dailyForecasts, executionEnd - executionStart);
     }
+
 }
